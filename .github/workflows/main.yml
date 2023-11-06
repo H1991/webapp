@@ -1,0 +1,17 @@
+name: Checkmarx SCA Scan
+on:
+  push:
+    branches:
+      - main
+      - master
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+    - run: apt-get update && apt-get install -y wget unzip
+    - run: wget -O cxcli.zip https://download.checkmarx.com/9.5.0/Plugins/CxConsolePlugin-1.1.26.zip
+    - run: unzip cxcli.zip -d cxcli
+    - run: chmod +x cxcli/runCxConsole.sh
+    - run: ./cxcli/runCxConsole.sh Scan -v -CxServer https://sca.checkmarx.net/ -ProjectName "/CxServer/Test/testBitbucket" -CxUser dusa.harish@xerox.com -CxPassword Harsha@1991 -LocationType folder -LocationPath "https://github.com/H1991/dvwaHarsha"
